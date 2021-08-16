@@ -2,18 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Type Ahead 👀</title>
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-
-  <form class="search-form">
-    <input type="text" class="search" placeholder="City or State">
-    <ul class="suggestions">
+  <div class="search-form-container">
+    <input id="searchBar" class="place-input" placeholder="City Or State" type="text"/>
+    <ul id="city-list" class="place-list">
       <li>Filter for a city</li>
-      <li>or a state</li>
+      <li>Or A State</li>
     </ul>
-  </form>
+  </div>
   <script src='index.js'></script>
   </body>
 </html>
