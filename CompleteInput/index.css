@@ -39,8 +39,11 @@ html {
     transition: background 0.8s;
     display: flex;
     justify-content: space-between;
-    text-transform: capitalize;
     background: linear-gradient(to bottom,  #ffffff 0%,#EFEFEF 100%);
 
+  }
+
+  .highlight {
+    background: hsl(47, 100%, 50%);
   }
   

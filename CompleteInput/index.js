@@ -1,47 +1,48 @@
 const api = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
-const cities = getplaces();
-var inputSearchBox = document.querySelector(".place-input");
-var listOfCities = document.querySelector(".place-list");
+const places = getplaces();
+let SearchBox = document.querySelector(".place-input");
+let listOfPlaces = document.querySelector(".place-list");
 
 function getplaces() {
-  let citiesArr = [];
+  let placesArr = [];
   fetch(api)
     .then(res => res.json())
-    .then(data => data.forEach(city => citiesArr.push(city)));
-  console.log(citiesArr);
-  return citiesArr;
+    .then(jsonData => jsonData.forEach(place => placesArr.push(place)));
+  return placesArr;
 }
 
-
-inputSearchBox.addEventListener('input', () => {
-  let conentOfSearchBox = inputSearchBox.value;
-  //Got Value
-  if (conentOfSearchBox) {
-    listOfCities.innerHTML = "";
-    let filteredCities = updateListOfCities(getMatchingCitiesArr(conentOfSearchBox));
-    //console.log(filteredCities);
+SearchBox.addEventListener('input', () => {
+  let SearchBoxText = SearchBox.value;
+  if (SearchBoxText) {
+    listOfPlaces.innerHTML = "";
+    let mathingArr = getMatchingPlaces(SearchBoxText);
+    updateListOfCities(mathingArr, SearchBoxText);
   }
-  else
-    listOfCities.innerHTML = "<li>Filter for A city</li><li>or a state</li>";
-
+  else {
+    listOfPlaces.innerHTML = "<li>Filter for A city</li><li>or a state</li>";
+  }
 })
 
-function updateListOfCities(citiesArr){
-  citiesArr.map(city =>{
-    listOfCities.insertAdjacentHTML('beforeend', `<li>${city}</li>`); 
-  })
-  return;
-}
-
-function getMatchingCitiesArr(text) {
+function getMatchingPlaces(SearchBoxText) {
   let mathingCities = [];
-  var regex = new RegExp(text.toUpperCase(), 'g');
-  cities.map(item => {
-    if (item.city.toUpperCase().match(regex) || item.state.toUpperCase().match(regex)) {
-      console.log(`${item.city}, ${item.state}`);
-      mathingCities.push(`${item.city}, ${item.state}`);
+  var regex = new RegExp(SearchBoxText.toUpperCase(), 'g');
+  places.map(place => {
+    if (place.city.toUpperCase().match(regex) || place.state.toUpperCase().match(regex)) {
+      mathingCities.push(`${place.city}, ${place.state}`);
     }
-  })
+  });
   return mathingCities;
 }
+
+function updateListOfCities(citiesArr, SearchBoxText) {
+  const newPlaceListHtml = citiesArr.map(place => {
+    const regex = new RegExp(SearchBoxText, 'gi');
+    const coloredPlace = place.replace(regex, `<span class="highlight">${SearchBoxText}</span>`);
+    return `<li><span>${coloredPlace}</span></li>`;
+  }).join('');
+  listOfPlaces.innerHTML = newPlaceListHtml;
+}
+
+
+
