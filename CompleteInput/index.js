@@ -18,9 +18,9 @@ inputSearchBox.addEventListener('input', () => {
   let conentOfSearchBox = inputSearchBox.value;
   //Got Value
   if (conentOfSearchBox) {
-    listOfCities.innerHTML = '';
+    listOfCities.innerHTML = "";
     let filteredCities = updateListOfCities(getMatchingCitiesArr(conentOfSearchBox));
-    console.log(filteredCities);
+    //console.log(filteredCities);
   }
   else
     listOfCities.innerHTML = "<li>Filter for A city</li><li>or a state</li>";
@@ -36,9 +36,9 @@ function updateListOfCities(citiesArr){
 
 function getMatchingCitiesArr(text) {
   let mathingCities = [];
-  var regex = new RegExp(text, 'g');
+  var regex = new RegExp(text.toUpperCase(), 'g');
   cities.map(item => {
-    if (item.city.match(regex) || item.state.match(regex)) {
+    if (item.city.toUpperCase().match(regex) || item.state.toUpperCase().match(regex)) {
       console.log(`${item.city}, ${item.state}`);
       mathingCities.push(`${item.city}, ${item.state}`);
     }
