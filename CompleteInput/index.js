@@ -13,11 +13,11 @@ function getplaces() {
 }
 
 SearchBox.addEventListener('input', () => {
-  let SearchBoxText = SearchBox.value;
+  const SearchBoxText = SearchBox.value;
   if (SearchBoxText) {
     listOfPlaces.innerHTML = "";
-    let mathingArr = getMatchingPlaces(SearchBoxText);
-    updateListOfCities(mathingArr, SearchBoxText);
+    const matchingArr = getMatchingPlaces(SearchBoxText);
+    updatePlacesList(matchingArr, SearchBoxText);
   }
   else {
     listOfPlaces.innerHTML = "<li>Filter for A city</li><li>or a state</li>";
@@ -26,16 +26,16 @@ SearchBox.addEventListener('input', () => {
 
 function getMatchingPlaces(SearchBoxText) {
   let mathingCities = [];
-  var regex = new RegExp(SearchBoxText.toUpperCase(), 'g');
+  const regex = new RegExp(SearchBoxText, 'gi');
   places.map(place => {
-    if (place.city.toUpperCase().match(regex) || place.state.toUpperCase().match(regex)) {
+    if (place.city.match(regex) || place.state.match(regex)) {
       mathingCities.push(`${place.city}, ${place.state}`);
     }
   });
   return mathingCities;
 }
 
-function updateListOfCities(citiesArr, SearchBoxText) {
+function updatePlacesList(citiesArr, SearchBoxText) {
   const newPlaceListHtml = citiesArr.map(place => {
     const regex = new RegExp(SearchBoxText, 'gi');
     const coloredPlace = place.replace(regex, `<span class="highlight">${SearchBoxText}</span>`);
